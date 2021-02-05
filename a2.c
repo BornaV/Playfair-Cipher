@@ -1,5 +1,6 @@
-#include "framework.h"
 #include <stdio.h>
+#include "framework.h"
+#define charSize 50
 //-----------------------------------------------------------------------------
 // Computes and returns the length of a string 
 //
@@ -95,80 +96,85 @@ int userChoice()
   }
   return userInputOption;
 }
-void formatSentance(char *text)
+
+void addLetter(char *text);
+void addLetter(char *text)
 {
-  int returnToZero =0;
-  int j = 0;
-  int first = 1;
-  int def = 0;
-  char temp[50];
-  char finalString[50];
-  for (int i = 0; i <= 50; i++)
+  char temp[charSize];
+  //int j = 0;
+  for (int i = 0; i < charSize; i++)
   {
-    finalString[i] = '\0';
     temp[i] = '\0';
   }
-  for (int i = 0; i < 50; i++)
+  for (int i = 0, j = 0; i < charSize;  i++)//fliping, adding space
   {
-    if(*text == '\0')
+    temp[i] = text[i - j];
+    if (text[i] == text[i - 1])
     {
-      break;
-    }
-    finalString[i] = *text;
-    text++;
-    returnToZero++;
-  }
-  
-  j = 0;
-  for (int i = 50; 0 < i; i--)//sets x if duplicate
-  {
-    if(finalString[j] == '\0')
-    {
-      break;
-    }
-    if (finalString[j] == finalString[j-1] && j % 2 == 1)
-    {
-      for (int k = 50; j < k; k--)
-      {
-        finalString[k] = finalString[k-1];  
-      }
-      finalString[j+1] = finalString[j];
-      finalString[j] = 'X';
       j++;
     }
-    j++;
-    
   }
-  if (j % 2 != 0) // if at the end still odd
+  for (int i = 0; i < charSize; i++)
   {
-    finalString[j] = 'X';
-  }
-  first = 1;
-  for (int i = 0; i < returnToZero; i++)//returns the pointer to default value
-  {
-    text--;
-  }
-  j = 0;
-  for (int i = 0; i < 50; i++)//sets space every second place
-  {
-    if (finalString[i] == '\0')
+    if (temp[i] == '\0')
     {
       break;
     }
-    if (j == 2)
-    {
-      temp[i+def] = ' ';
-      def++; 
-      i--;
-      j = -1;
-    }
-    else
-    {
-      temp[i+def] = finalString[i];
-    }
-    j++;
+    *text = temp[i];
+    text++;
   }
-  for (int i = 0; i < 50; i++)
+  //*text = ;
+}
+
+
+
+void formatSentance(char *text)
+{
+  char temp[charSize];
+  int j = 0;
+  for (int i = 0; i < charSize; i++)
+  {
+    temp[i] = '\0';
+  }
+  //addLetter(&text[0]);
+  for (int i = 0; i < charSize;  i++)//fliping, adding space
+  {
+    if ((i + 1)%3 == 0)
+    {
+      temp[i] = ' ';
+      i++;
+    }
+    temp[i] = text[j];
+    j++;
+    if (text[j - 1 ] == '\0')
+    {
+      break;
+    }
+  }
+  j = charSize;
+  int i = 0;
+  for (i = 0; i < charSize; i++)
+  {
+    if (temp[i] > 65 && temp[i] < 90 && temp[i+1] == '\0')
+    {
+      temp[i+1] = 'X';
+      break;
+    }
+    if (temp[i] == '\0' || temp[i+1] == '\0')
+    {
+      break;
+    }
+    if (temp[i] == temp[i+1])
+    {
+      temp[i+1] = 'X';
+    }
+  }
+  if (temp[i] == ' ')
+    {
+    temp[i] = '\0';
+    }
+  
+  for (int i = 0; i < charSize; i++)
   {
     if (temp[i] == '\0')
     {
@@ -178,7 +184,6 @@ void formatSentance(char *text)
     text++;
   }
 }
-
 void cleenup(char *text)  //calls the functions that set letters to uppercase and remove spaces
 {
   toUpper(&text[0]);
@@ -221,106 +226,106 @@ void getRowCoulmn(int value, int *value1){ // couldnt think of a more elegant so
   int Coulmn;
   switch (value)
   {
-  case 0:
-    Row = 0;
-    Coulmn = 0;
-    break;
-  case 1:
-    Row = 1;
-    Coulmn = 0;
-    break;
-  case 2:
-    Row = 2;
-    Coulmn = 0;
-    break;
-  case 3:
-    Row = 3;
-    Coulmn = 0;
-    break;
-  case 4:
-    Row = 4;
-    Coulmn = 0;
-    break;
-  case 5:
-    Row = 0;
-    Coulmn = 1;
-    break;
-  case 6:
-    Row = 1;
-    Coulmn = 1;
-    break;
-  case 7:
-    Row = 2;
-    Coulmn = 1;
-    break;
-  case 8:
-    Row = 3;
-    Coulmn = 1;
-    break;
-  case 9:
-    Row = 4;
-    Coulmn = 1;
-    break;
-  case 10:
-    Row = 0;
-    Coulmn = 2;
-    break;
-  case 11:
-    Row = 1;
-    Coulmn = 2;
-    break;
-  case 12:
-    Row = 2;
-    Coulmn = 2;
-    break;
-  case 13:
-    Row = 3;
-    Coulmn = 2;
-    break;
-  case 14:
-    Row = 4;
-    Coulmn = 2;
-    break;
-  case 15:
-    Row = 0;
-    Coulmn = 3;
-    break;
-  case 16:
-    Row = 1;
-    Coulmn = 3;
-    break;
-  case 17:
-    Row = 2;
-    Coulmn = 3;
-    break;
-  case 18:
-    Row = 3;
-    Coulmn = 3;
-    break;
-  case 19:
-    Row = 4;
-    Coulmn = 3;
-    break;
-  case 20:
-    Row = 0;
-    Coulmn = 4;
-    break;
-  case 21:
-    Row = 1;
-    Coulmn = 4;
-    break;
-  case 22:
-    Row = 2;
-    Coulmn = 4;
-    break;
-  case 23:
-    Row = 3;
-    Coulmn = 4;
-    break;
-  case 24:
-    Row = 4;
-    Coulmn = 4;
-    break;
+    case 0:
+      Row = 0;
+      Coulmn = 0;
+      break;
+    case 1:
+      Row = 1;
+      Coulmn = 0;
+      break;
+    case 2:
+      Row = 2;
+      Coulmn = 0;
+      break;
+    case 3:
+      Row = 3;
+      Coulmn = 0;
+      break;
+    case 4:
+      Row = 4;
+      Coulmn = 0;
+      break;
+    case 5:
+      Row = 0;
+      Coulmn = 1;
+      break;
+    case 6:
+      Row = 1;
+      Coulmn = 1;
+      break;
+    case 7:
+      Row = 2;
+      Coulmn = 1;
+      break;
+    case 8:
+      Row = 3;
+      Coulmn = 1;
+      break;
+    case 9:
+      Row = 4;
+      Coulmn = 1;
+      break;
+    case 10:
+      Row = 0;
+      Coulmn = 2;
+      break;
+    case 11:
+      Row = 1;
+      Coulmn = 2;
+      break;
+    case 12:
+      Row = 2;
+      Coulmn = 2;
+      break;
+    case 13:
+      Row = 3;
+      Coulmn = 2;
+      break;
+    case 14:
+      Row = 4;
+      Coulmn = 2;
+      break;
+    case 15:
+      Row = 0;
+      Coulmn = 3;
+      break;
+    case 16:
+      Row = 1;
+      Coulmn = 3;
+      break;
+    case 17:
+      Row = 2;
+      Coulmn = 3;
+      break;
+    case 18:
+      Row = 3;
+      Coulmn = 3;
+      break;
+    case 19:
+      Row = 4;
+      Coulmn = 3;
+      break;
+    case 20:
+      Row = 0;
+      Coulmn = 4;
+      break;
+    case 21:
+      Row = 1;
+      Coulmn = 4;
+      break;
+    case 22:
+      Row = 2;
+      Coulmn = 4;
+      break;
+    case 23:
+      Row = 3;
+      Coulmn = 4;
+      break;
+    case 24:
+      Row = 4;
+      Coulmn = 4;
+      break;
   }
   // attention, the row and column is reversed!!!
   *value1 = Coulmn;
@@ -348,7 +353,7 @@ void getNewKey(char *text,char *text1, int *first, int *second) //it assigns the
 
 int main()
 {
-  char userInput[25];
+  char userInput[25] = {0};
   char providedSentance[50];
   char keyinProcessing[3] = {'\0','\0', '\0' };
   int choice;
@@ -377,6 +382,7 @@ int main()
       printf("Klartext: "); //encription
       scanf("%[^\n]s", providedSentance);
       while ((getchar()) != '\n');
+      addLetter(&providedSentance[0]);
       encription(&providedSentance[0],&userInput[0]);
       printf("Vorbereiteter Klartext: %s\n", providedSentance);
       int i = 0;
@@ -440,7 +446,7 @@ int main()
         i++;
       } while (providedSentance[i*3] != '\0');
       printf("Ciphertext: ");
-      for (int i = 50; 0 < i; i--)  //making sure that the testcases can read the format correctly
+      for (int i = 49; 0 < i; i--)  //making sure that the testcases can read the format correctly
         {
           if (providedSentance[i] == ' ')
           {
@@ -529,7 +535,7 @@ int main()
         //replaceLetters to za izmjenu kljuca
       } while (providedSentance[i*3] != '\0');
       printf("Klartext: ");
-      for (int i = 50; 0 < i; i--)  //making sure that the testcases can read the format correctly
+      for (int i = 49; 0 < i; i--)  //making sure that the testcases can read the format correctly
         {
           if (providedSentance[i] == ' ')
           {
